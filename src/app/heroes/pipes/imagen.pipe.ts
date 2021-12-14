@@ -3,11 +3,21 @@ import { Heroe } from '../interfaces/heroes.interface';
 
 @Pipe({
   name: 'imagen'
+  // Pipe imputo o puro: se ejecuta al detectar el ciclo de detección
+  // pure: false
 })
 export class ImagenPipe implements PipeTransform {
 
   transform(heroe: Heroe): string {
-    return (heroe.id) ? `assets/heroes/${heroe.id}.jpg` : `assets/no-image.png`
+    // console.log('Se procesó');
+    
+    if( !heroe.id && !heroe.alt_img ){
+      return `assets/no-image.png`;
+    } else if( heroe.alt_img ){
+      return heroe.alt_img;
+    } else{
+      return`assets/heroes/${heroe.id}.jpg`;
+    }
   }
 
 }
